@@ -25,27 +25,19 @@ class Queue {
   }
 
 	enqueue(value) {
-		let newNode = new ListNode(value);
-		this.tail.next = newNode;
-		this.tail = newNode;
-
-		// this.queue[this.tail++] = new ListNode(value);
-		// if (this.head.value === null) this.head.value = value;
-		// else {
-		// 	let next = this.head.next;
-		// 	while (next !== null) next = next.next;
-		// 	next.value = value;
-		// }
+		if (this.head.value === null) this.head.value = value;
+		else if(this.tail.value === null) this.tail.value = value;
+		else {
+			let newNode = new ListNode(value);
+			this.tail.next = newNode;
+			this.tail = newNode;
+		}
   }
 
 	dequeue() {
 		let head = this.head;
 		this.head = this.head.next;
-		return head;
-		// if (this.tail === this.head) return undefined;
-		// let element = this.queue[this.head];
-		// delete this.queue[this.head++];
-		// return element;
+		return head.value;
   }
 }
 

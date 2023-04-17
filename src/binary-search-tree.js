@@ -40,13 +40,6 @@ class BinarySearchTree {
 
 	has(data) {
 		return this.find(data) ? true : false;
-		// if (data === this.root.data) return true;
-		// let next = this.root;
-		// while (next.data !== null) {
-		// 	next = data > next.data ? next.rightBranch : next.leftBranch;
-		// 	if (data === next.data) return true;
-		// }
-		// return false;
 	}
 
 	min(node = this.root) {
@@ -64,26 +57,30 @@ class BinarySearchTree {
 	}
 
 	remove(data) {
-		throw new NotImplementedError('Not implemented');
-		// let parent = this.root;
-		// let next = parent;
-		// if (data !== next.data) {
-		// 	next = data > parent.data ? parent.rightBranch : parent.leftBranch;
-		// 	while (true) {
-		// 		if (data === next.data) break;
-		// 		parent = next;
-		// 		next = data > next.data ? next.rightBranch : next.leftBranch;
-		// 	}
-		// }
-		
-		// if (next.rightBranch.data === null && next.leftBranch.data === null) next.data = null;
-		// else if (next.rightBranch.data !== null && next.leftBranch.data !== null) {
-		// 	parent.leftBranch.data === next.data ? parent.leftBranch = this.min(next.rightBranch) : parent.rightBranch = this.min(next.rightBranch);
-		// }
-		// else if (next.rightBranch.data === null || next.leftBranch.data === null) {
-		// 	if (parent.leftBranch.data === next.data) parent.leftBranch = next.leftBranch.data === null ? next.rightBranch : next.leftBranch;
-		// 	else if (parent.rightBranch.data === next.data) parent.rightBranch = next.leftBranch.data === null ? next.rightBranch : next.leftBranch;
-		// }
+		// throw new NotImplementedError('Not implemented');
+		let parent = this.root;
+		let next = parent;
+		if (data !== next.data) {
+			next = data > parent.data ? parent.rightBranch : parent.leftBranch;
+			while (true) {
+				if (data === next.data) break;
+				parent = next;
+				next = data > next.data ? next.rightBranch : next.leftBranch;
+			}
+		}
+		if (next.rightBranch.data === null && next.leftBranch.data === null) next.data = null;
+		else if (next.rightBranch.data !== null && next.leftBranch.data !== null) {
+			const maxElemLeft = this.max(next.leftBranch);
+			const maxElemLeftNode = this.find(maxElemLeft);
+			maxElemLeftNode.data = null;
+			next.data = maxElemLeft;
+		}
+		else if (next.rightBranch.data !== null || next.leftBranch.data !== null) {
+			const child = next.leftBranch.data === null ? next.rightBranch : next.leftBranch;
+			next.data = child.data;
+			next.leftBranch = child.leftBranch;
+			next.rightBranch = child.rightBranch;
+		}
 	}
 }
 
